@@ -1,0 +1,33 @@
+
+services:
+  db:
+    image: postgres:17
+    container_name: tiendaya-db
+    environment:
+      POSTGRES_DB: tiendaya
+      POSTGRES_USER: ${DB_USERNAME:-tiendaya}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Debes definir DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - tiendaya_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-tiendaya} -d tiendaya"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: tiendaya-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-tiendaya@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?Debes definir PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  tiendaya_data:
