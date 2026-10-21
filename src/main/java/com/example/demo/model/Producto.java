@@ -13,57 +13,45 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 /**
- * Representa un producto de la tienda.
+ * Representa un producto disponible en la tienda.
+ * Contiene su información básica, precio y existencias.
+ *
+ * @author
+ * @version 1.0
  */
 @Entity
-@Table(name = "products")
+@Table(name = "productos")
 @Getter
 @Setter
-public class Product {
+@NoArgsConstructor
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 120)
     @Column(nullable = false, length = 120)
-    private String name;
-
-    @NotNull
-    @Positive
-    @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal price;
+    private String nombre;
 
     @Size(max = 225)
     @Column(length = 225)
-    private String description;
+    private String descripcion;
 
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "El precio es obligatorio")
+    @Positive(message = "El precio debe ser mayor que cero")
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal precio;
+
+    @NotNull(message = "El stock es obligatorio")
+    @PositiveOrZero(message = "El stock no puede ser negativo")
     @Column(nullable = false)
     private Integer stock = 0;
-
-    /**
-     * Constructor vacío requerido por JPA.
-     */
-    protected Product() {
-    }
-
-    /**
-     * Crea un producto con nombre y precio.
-     *
-     * @param name nombre del producto
-     * @param price precio del producto
-     */
-    public Product(String name, BigDecimal price) {
-        this.name = name;
-        this.price = price;
-        this.stock = 0;
-    }
 }

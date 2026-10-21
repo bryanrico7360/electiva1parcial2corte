@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Proporciona operaciones de acceso a datos para los pedidos.
+ * Repositorio para acceder y administrar los pedidos almacenados
+ * en la base de datos.
  *
- * Permite guardar, consultar, actualizar y eliminar pedidos
- * mediante las operaciones heredadas de JpaRepository.
+ * <p>Hereda de JpaRepository las operaciones CRUD para la entidad
+ * Pedido, utilizando Long como tipo de identificador.</p>
+ *
+ * @author
+ * @version 1.0
  */
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {

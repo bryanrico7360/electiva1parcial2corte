@@ -2,10 +2,25 @@
 package com.example.demo.model;
 
 /**
- * Estados posibles de un pedido.
+ * Define los estados posibles de un pedido dentro de la tienda.
+ *
+ * @author
+ * @version 1.0
  */
 public enum EstadoPedido {
-    PENDIENTE,
+
+    /**
+     * Pedido en preparación que todavía puede modificarse.
+     */
+    CARRITO,
+
+    /**
+     * Pedido confirmado y con el inventario descontado.
+     */
     CONFIRMADO,
+
+    /**
+     * Pedido cancelado.
+     */
     CANCELADO
 }
